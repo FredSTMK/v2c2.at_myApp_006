@@ -1,0 +1,70 @@
+==================================
+npm install -g create-react-native-app
+==================================
+
+create-react-native-app myApp_006
+
+Git: clone repositiry:
+    https://github.com/FredSTMK/v2c2.at_myApp_006.git
+    
+    manfred.rosenberger@gmx.net
+    rC72
+    
+    
+git init
+git clone https://github.com/FredSTMK/v2c2.at_myApp_006.git
+
+TortoiseGit
+    commit
+    Settings
+        origin
+        https://github.com/FredSTMK/v2c2.at_myApp_005.git
+
+git push
+
+react-native start
+
+npm install
+react-native upgrade
+react-native run-android
+
+-------------------
+./android/local.properties
+    sdk.dir=C\:\\Users\\manfredrosenberger\\AppData\\Local\\Android\\sdk
+./android/gradle.properties    
+    org.gradle.java.home=C:\\Program Files\\Java\\jdk1.8.0_152
+-------------------
+
+react-native run-android
+
+
+==================================
+
+npm install -g react-native-git-upgrade
+
+==================================
+
+
+
+
+
+
+npm install -g create-react-native-app
+
+create-react-native-app my-app-001
+
+cd my-app-001
+ 
+npm start
+
+npm run android
+
+
+==================================
+
+npm install -g react-native-cli
+
+https://github.com/react-community/react-native-maps
+
+
+==================================
