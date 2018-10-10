@@ -17,8 +17,25 @@ export default class MainApp extends React.Component {
   }
 
   _onPress(key) {
-    // Alert.alert('on Press! ' + key);
-    this.setState({text: this.state.text + key});
+    // Alert.alert('on Press! ' + key); 
+    switch (key) {
+      case 'clear':
+        this.setState({text: ''});
+        break;      
+      case 'space':
+        this.setState({text: this.state.text + '_'});
+        break;     
+      case 'enter':
+        this.setState({text: ''});
+        break;
+      case 'back':
+        let str = this.state.text;
+        str = str.slice(0, -1);
+        this.setState({text: str});
+        break;      
+      default:
+        this.setState({text: this.state.text + key});
+    }
   }
 
   render() {

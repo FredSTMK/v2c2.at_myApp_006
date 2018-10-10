@@ -25,6 +25,7 @@ class entryText extends Component {
         </TouchableOpacity>
       );
   }
+
 }
 
 export default entryText;
