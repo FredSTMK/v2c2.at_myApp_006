@@ -13,51 +13,64 @@ export default class MainApp extends React.Component {
   
   constructor(props) {
     super(props);
-    this.state = {text: ''};
+    this.valueList = ['Graz', 'Wien', 'München', 'Köln', 'Berlin', 'Mailand', 'Rom', 'Paris'];
+    this.state = {
+          key: 0,
+          templateText: this.valueList[0],
+          entryText: ''
+        };
   }
+  
 
   _onPress(key) {
     // Alert.alert('on Press! ' + key); 
     switch (key) {
       case 'clear':
-        this.setState({text: ''});
+        this.setState({entryText: ''});
         break;      
       case 'space':
-        this.setState({text: this.state.text + '_'});
+        this.setState({entryText: this.state.entryText + '_'});
         break;     
       case 'enter':
-        this.setState({text: ''});
+        let areEqual = this.state.templateText.toUpperCase() === this.state.entryText.toUpperCase();
+        if (areEqual) {
+          ++this.state.key;
+          this.setState({templateText: this.valueList[this.state.key]});
+          this.setState({entryText: ''});
+        }
         break;
       case 'back':
-        let str = this.state.text;
+        let str = this.state.entryText;
         str = str.slice(0, -1);
-        this.setState({text: str});
+        this.setState({entryText: str});
         break;      
       default:
-        this.setState({text: this.state.text + key});
+        this.setState({entryText: this.state.entryText + key});
     }
   }
 
   render() {
     return (
-      <View style={styles.container}>
+      <View style={styles.containerMain}>
         <Grid>
-          <Col style={styles.gray_box}></Col>
+          <Col style={styles.grayBox}></Col>
           <Col>
-            <Row style={styles.orange_box}>
-              <Col style={styles.textContainer}>
-                <Row style={styles.keyboard_line}>
-                  <CustomText
-                    buttonStyles={styles.buttonStyles}
-                    textStyles={styles.textView}
-                    content={this.state.text}>
-                  </CustomText>   
-                </Row>             
-              </Col>
-            </Row>
-            <Row style={styles.green_box}>
-              <Col style={styles.keyboard_box}>
-                <Row style={styles.keyboard_line}>
+              <Row style={styles.templateContainer}>
+                <CustomText
+                  buttonStyles={styles.buttonStyles}
+                  textStyles={styles.templateText}
+                  content={this.state.templateText}>
+                </CustomText>   
+              </Row>
+              <Row style={styles.entryContainer}>
+                <CustomText
+                  buttonStyles={styles.buttonStyles}
+                  textStyles={styles.entryText}
+                  content={this.state.entryText}>
+                </CustomText>                  
+              </Row> 
+            <Row style={styles.keyboardContainer}>
+                <Row style={styles.keyboardRow}>
                   <KeyboardButton text="Q"	onPress={() => {this._onPress("Q");}}	/>
                   <KeyboardButton text="W"	onPress={() => {this._onPress("W");}}	/>
                   <KeyboardButton text="E"	onPress={() => {this._onPress("E");}}	/>
@@ -69,8 +82,9 @@ export default class MainApp extends React.Component {
                   <KeyboardButton text="O"	onPress={() => {this._onPress("O");}}	/>
                   <KeyboardButton text="P"	onPress={() => {this._onPress("P");}}	/>
                   <KeyboardButton text="Ü"	onPress={() => {this._onPress("Ü");}}	/>
+                  <KeyboardCommand commandType="back"  	onPress={() => {this._onPress("back");}}	/>
                 </Row>
-                <Row style={styles.keyboard_line}>              
+                <Row style={styles.keyboardRow}>              
                   <KeyboardButton text="A"	onPress={() => {this._onPress("A");}}	/>
                   <KeyboardButton text="S"	onPress={() => {this._onPress("S");}}	/>
                   <KeyboardButton text="D"	onPress={() => {this._onPress("D");}}	/>
@@ -83,7 +97,7 @@ export default class MainApp extends React.Component {
                   <KeyboardButton text="Ö"	onPress={() => {this._onPress("Ö");}}	/>
                   <KeyboardButton text="Ä"	onPress={() => {this._onPress("Ä");}}	/>
                 </Row>                
-                <Row style={styles.keyboard_line}>
+                <Row style={styles.keyboardRow}>
                   <KeyboardButton text="Y"	onPress={() => {this._onPress("Y");}}	/>
                   <KeyboardButton text="X"	onPress={() => {this._onPress("X");}}	/>
                   <KeyboardButton text="C"	onPress={() => {this._onPress("C");}}	/>
@@ -91,14 +105,12 @@ export default class MainApp extends React.Component {
                   <KeyboardButton text="B"	onPress={() => {this._onPress("B");}}	/>
                   <KeyboardButton text="N"	onPress={() => {this._onPress("N");}}	/>
                   <KeyboardButton text="M"	onPress={() => {this._onPress("M");}}	/>
-                  <KeyboardCommand commandType="back"  	onPress={() => {this._onPress("back");}}	/>
                 </Row>                
-                <Row style={styles.keyboard_line}>
+                <Row style={styles.keyboardRow}>
                   <KeyboardCommand commandType="clear"	onPress={() => {this._onPress("clear");}}	/>
                   <KeyboardCommand commandType="space"	onPress={() => {this._onPress("space");}}	/>
                   <KeyboardCommand commandType="enter"	onPress={() => {this._onPress("enter");}}	/>
                 </Row>
-              </Col>
             </Row>
           </Col>
         </Grid>
@@ -108,58 +120,67 @@ export default class MainApp extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  orange_box: {
+
+  containerMain: {
     flex: 1,
-    height: 100,
-    backgroundColor: 'orange',
-    alignItems: 'stretch'
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF'
   },
-  green_box: {
-    backgroundColor: 'green'
-  },
-  gray_box: {
+
+  grayBox: {
     width: 150,
     backgroundColor: 'gray'
   },
   
-  textContainer: {
-    flex: 1,
+  templateContainer: {
+    flexDirection: 'row',
+    height: 80,
+    backgroundColor: 'lightgray',
+    borderRadius: 0,
+    justifyContent: 'center',
+    padding: 5,
+  },
+
+  templateText: {
+    justifyContent: 'flex-end',
+    padding: 10, 
+    fontSize: 42,
+    backgroundColor: 'lightgray'
+  },
+
+  entryContainer: {
+    height: 100,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
     flexDirection: 'column',
   },
 
-  textView: {
-    flex: 1,
+  entryText: {
     justifyContent: 'flex-end',
     padding: 10, 
-    fontSize: 42,
+    fontSize: 52,
     backgroundColor: 'white'
   },
 
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF'
-  },
-  keyboard_box: {
+  keyboardContainer: {
     flex: 1,
     backgroundColor: '#2E9298',
     flexDirection: 'column',
+    padding: 4,
     // borderRadius: 0,
     // padding: 0,
     // justifyContent: 'center',
   },  
-  keyboard_line: {
-    flex: 1,
+  keyboardRow: {
+    // flex: 1,
     // backgroundColor: '#2E9200',
     // backgroundColor: '#2E9200',
     flexDirection: 'row',
     borderRadius: 0,
     justifyContent: 'center',
-    padding: 5,
+    padding: 2,
     // alignItems: 'stretch'
   },
   buttonStyles: {},
