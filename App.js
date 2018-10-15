@@ -5,68 +5,203 @@ import {
 import { 
   Col, Row, Grid 
 } from "react-native-easy-grid";
+import Timestamp from 'react-timestamp';
 import KeyboardButton  from './components/keyboardButton';
-import KeyboardCommand from './components/keyboardCommand';
+import CommandButton from './components/commandButton';
 import CustomText from './components/customText';
 
 export default class MainApp extends React.Component {
   
   constructor(props) {
     super(props);
-    this.valueList = ['Graz', 'Wien', 'München', 'Köln', 'Berlin', 'Mailand', 'Rom', 'Paris'];
+    this.dateObject = new Date();
+    this.valueKey =     0;
+    this.valueList =    ['Graz', 'Wien', 'München', 'Köln', 'Berlin', 'Mailand', 'Rom', 'Paris'];
+    this.timeStart =    this.dateObject.getTime();
+    this.timeNext =     this.dateObject.getTime();
+    this.textTemplate = this.valueList[0];
+    this.textEntry =    '';
+    this.textState =    '';
+    this.textDebug =    '';
     this.state = {
-          key: 0,
-          templateText: this.valueList[0],
-          entryText: ''
+          //templateText: this.valueList[0],
+          //entryText:    '',
+          //stateText:    '',
+          //debugText:    '',
+          //timeStart:    this.dateObject.getTime(),
+          //timeNext:     this.dateObject.getTime(),
+          timeButtonPress:  '',
+          timeCommit:       '',
         };
+    
   }
-  
+
 
   _onPress(key) {
-    // Alert.alert('on Press! ' + key); 
+    // Alert.alert('on Press! -1- ' + key); 
+    // console.log('on Press! -1- ' + key); 
     switch (key) {
+
       case 'clear':
-        this.setState({entryText: ''});
-        break;      
+        this.textEntry = '';
+        this.setState({timeButtonPress: this.dateObject.getTime()})
+        break;
+        
       case 'space':
-        this.setState({entryText: this.state.entryText + '_'});
-        break;     
+        this.textEntry = this.textEntry + '_';
+        this.setState({timeButtonPress: this.dateObject.getTime()})
+        break;
+        
       case 'enter':
-        let areEqual = this.state.templateText.toUpperCase() === this.state.entryText.toUpperCase();
+        let areEqual = this.textTemplate.toUpperCase() === this.textEntry.toUpperCase();
         if (areEqual) {
-          ++this.state.key;
-          this.setState({templateText: this.valueList[this.state.key]});
-          this.setState({entryText: ''});
+          this._debugText_clear();
+          this._debugText_add(this.valueList[this.valueKey] + ": ");
+            //
+          ++this.valueKey;
+          this.textTemplate = this.valueList[this.valueKey];
+          this.textEntry =    '';
+            //
+            // let _date = new Date();
+          let _last = this.timeNext;
+          let _now = new Date().getTime();
+          let _duration = _now - _last;
+            //
+          console.log('        _now ' + _now);
+          console.log('       _last ' + _last);
+          console.log('   _duration ' + _duration);
+            //
+          this.timeNext = _now;
+          //
+          this._debugText_add(_now + " - " + _last + " = " + _duration);
+          this._debugText_add(" - 1 - ");
+          // this.setState({timeNext: _now});
+          // this.setState({timeDuration: _duration}, () => { 
+            // open file, go to line and save line
+            // POST to web service
+          // console.log(_duration);
+          // });
+          
+          //this._debugText_add(_newString = _now + " - " + _last + " = " + _duration);
+          //this._debugText_add("\n - 1 - ");
+  
+
+          // let __str = _now + " - " + _last + " = " + _duration;
+          // this._onPress__Enter();
+          this.setState({timeButtonPress: this.dateObject.getTime()})
         }
         break;
+
       case 'back':
-        let str = this.state.entryText;
+        let str = this.textEntry;
         str = str.slice(0, -1);
-        this.setState({entryText: str});
-        break;      
+        this.textEntry = str;
+        this.setState({timeButtonPress: this.dateObject.getTime()})
+        break; 
+
+      case 'start':
+        this._textState_update();
+        break;
+      case 'pause':
+        //this.setState({stateText: ''});
+        //this._textState_update();
+        break;       
+      case 'continue':
+        //this.setState({stateText: ''});
+        //this._textState_update();
+        break; 
+      case 'stop':
+        //this.setState({stateText: ''});
+        //this._textState_update();
+        break; 
+
+                
+
       default:
-        this.setState({entryText: this.state.entryText + key});
+        // console.log('on Press! -2- ' + this.textEntry);  
+        // console.log('on Press! -3- ' + key);  
+        this.textEntry = this.textEntry + key;
+        // console.log('on Press! -4- ' + this.textEntry);
+        this.setState({timeCommit: this.dateObject.getTime()});
     }
   }
 
+  // _onPress__textState_update = new Promise(
+  //    function(this._debugText_add, reject) {
+  //      if (let _date = new Date();)
+
+  //    }
+  //  )
+
+  //_onPress__Enter() {
+  //  // let _date = new Date();
+  //  let _last = this.state.timeNext;
+  //  let _now = _date.getTime();
+  //  let _duration = _now - _last;
+  //  this._debugText_clear();
+  //  this.setState({timeNext: _now});
+  //  this.setState({timeDuration: _duration});
+  //  this._debugText_add(_newString = _now + " - " + _last + " = " + _duration);
+  //  this._debugText_add(result + "\n - 1 - ");
+  //  this._textState_update();
+  //  return this.state.debugText;
+  //}
+
+  _debugText_add(str) {
+    _str = this.textDebug;
+    __str = _str + "\n" + str;
+    // Alert.alert('_debugText_add: ' + this.state.debugText + " - " + str); 
+    this.textDebug =  __str;
+    // console.log(' ... done :' + _str + ' + ' + str + ' -> ' + __str);
+    // return this.textDebug;
+  }
+  _debugText_clear() {
+    this.textDebug = '';
+    // return this.textDebug;
+  }
+  _textState_update() {
+      // this.setState({stateText: ''});
+    this.textState = "session start:   " + this.state.timeStart + "\n" +
+                              "  last duration: " + this.state.timeDuration +  "\n" +
+                              "  loop start:    " + this.state.timeNext +  "\n" +
+                              " ..." ;
+    return this.textState;
+  }
+
   render() {
+    //this.setState({stateText: "start: " + new Date.getTime(),
+    //this.setState({timeStart: this.dateObject.getTime(),
+    //this.setState({timeNext: new Date.getTime(),
+
+
     return (
       <View style={styles.containerMain}>
         <Grid>
-          <Col style={styles.grayBox}></Col>
+          <Col style={styles.grayBox}>
+            <Text numberOfLines={5} style={styles.stateText}>
+              {this.textState}
+            </Text>
+            <Text numberOfLines={5} style={styles.stateText}>
+              {this.textDebug}
+            </Text>            
+            <CommandButton commandType="start"	  onPress={() => {this._onPress("start");}}	/>
+            <CommandButton commandType="pause"    onPress={() => {this._onPress("pause");}}	/>
+            <CommandButton commandType="continue" onPress={() => {this._onPress("continue");}}/>
+            <CommandButton commandType="stop"  	  onPress={() => {this._onPress("stop");}}	/>
+          </Col>
           <Col>
               <Row style={styles.templateContainer}>
                 <CustomText
                   buttonStyles={styles.buttonStyles}
                   textStyles={styles.templateText}
-                  content={this.state.templateText}>
+                  content={this.textTemplate}>
                 </CustomText>   
               </Row>
               <Row style={styles.entryContainer}>
                 <CustomText
                   buttonStyles={styles.buttonStyles}
                   textStyles={styles.entryText}
-                  content={this.state.entryText}>
+                  content={this.textEntry}>
                 </CustomText>                  
               </Row> 
             <Row style={styles.keyboardContainer}>
@@ -82,7 +217,7 @@ export default class MainApp extends React.Component {
                   <KeyboardButton text="O"	onPress={() => {this._onPress("O");}}	/>
                   <KeyboardButton text="P"	onPress={() => {this._onPress("P");}}	/>
                   <KeyboardButton text="Ü"	onPress={() => {this._onPress("Ü");}}	/>
-                  <KeyboardCommand commandType="back"  	onPress={() => {this._onPress("back");}}	/>
+                  <CommandButton commandType="back"  	onPress={() => {this._onPress("back");}}	/>
                 </Row>
                 <Row style={styles.keyboardRow}>              
                   <KeyboardButton text="A"	onPress={() => {this._onPress("A");}}	/>
@@ -107,15 +242,16 @@ export default class MainApp extends React.Component {
                   <KeyboardButton text="M"	onPress={() => {this._onPress("M");}}	/>
                 </Row>                
                 <Row style={styles.keyboardRow}>
-                  <KeyboardCommand commandType="clear"	onPress={() => {this._onPress("clear");}}	/>
-                  <KeyboardCommand commandType="space"	onPress={() => {this._onPress("space");}}	/>
-                  <KeyboardCommand commandType="enter"	onPress={() => {this._onPress("enter");}}	/>
+                  <CommandButton commandType="clear"	onPress={() => {this._onPress("clear");}}	/>
+                  <CommandButton commandType="space"	onPress={() => {this._onPress("space");}}	/>
+                  <CommandButton commandType="enter"	onPress={() => {this._onPress("enter");}}	/>
                 </Row>
             </Row>
           </Col>
         </Grid>
       </View>
     );
+    // this._textState_update();
   }
 }
 
@@ -131,6 +267,14 @@ const styles = StyleSheet.create({
   grayBox: {
     width: 150,
     backgroundColor: 'gray'
+  },
+  
+  menuContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    width: 150,
+    backgroundColor: 'gray',
+    justifyContent: 'flex-end',
   },
   
   templateContainer: {
@@ -162,6 +306,12 @@ const styles = StyleSheet.create({
     padding: 10, 
     fontSize: 52,
     backgroundColor: 'white'
+  },
+
+  stateText: {
+    height: 90,
+    fontFamily: 'Cochin',
+    fontSize: 10,
   },
 
   keyboardContainer: {
