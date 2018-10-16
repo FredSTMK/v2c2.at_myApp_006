@@ -55,12 +55,6 @@ export default class MainApp extends React.Component {
       case 'enter':
         let areEqual = this.textTemplate.toUpperCase() === this.textEntry.toUpperCase();
         if (areEqual) {
-          this._debugText_clear();
-          this._debugText_add(this.valueList[this.valueKey] + ": ");
-            //
-          ++this.valueKey;
-          this.textTemplate = this.valueList[this.valueKey];
-          this.textEntry =    '';
             //
             // let _date = new Date();
           let _last = this.timeNext;
@@ -71,23 +65,26 @@ export default class MainApp extends React.Component {
           console.log('       _last ' + _last);
           console.log('   _duration ' + _duration);
             //
-          this.timeNext = _now;
-          //
-          this._debugText_add(_now + " - " + _last + " = " + _duration);
-          this._debugText_add(" - 1 - ");
-          // this.setState({timeNext: _now});
-          // this.setState({timeDuration: _duration}, () => { 
+            //
+          this._debugText_clear();
+          this._debugText_add('Template: ' + this.valueList[this.valueKey]);
+          this._debugText_add('------------------------------');
+          this._debugText_add('Start: ' + _last);
+          this._debugText_add('End: ' + + _now );
+          this._debugText_add('-----------------------------');
+          this._debugText_add('Duration: '  + _duration + ' [ms]');
+            // this._debugText_add(" - 1 - ");
+            // this.setState({timeNext: _now});
+            // this.setState({timeDuration: _duration}, () => { 
             // open file, go to line and save line
             // POST to web service
-          // console.log(_duration);
-          // });
-          
-          //this._debugText_add(_newString = _now + " - " + _last + " = " + _duration);
-          //this._debugText_add("\n - 1 - ");
-  
-
-          // let __str = _now + " - " + _last + " = " + _duration;
-          // this._onPress__Enter();
+            // console.log(_duration);
+            // });
+          this.timeNext = _now;
+          ++this.valueKey;
+          this.textTemplate = this.valueList[this.valueKey];
+          this.textEntry =    '';
+            //
           this.setState({timeButtonPress: this.dateObject.getTime()})
         }
         break;
@@ -181,7 +178,7 @@ export default class MainApp extends React.Component {
             <Text numberOfLines={5} style={styles.stateText}>
               {this.textState}
             </Text>
-            <Text numberOfLines={5} style={styles.stateText}>
+            <Text numberOfLines={7} style={styles.stateText}>
               {this.textDebug}
             </Text>            
             <CommandButton commandType="start"	  onPress={() => {this._onPress("start");}}	/>
