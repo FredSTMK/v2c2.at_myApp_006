@@ -2,20 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { TouchableOpacity, Text, StyleSheet, View } from 'react-native';
 
-class entryText extends Component {
-  static propTypes = {
-    content: PropTypes.string.isRequired,
-    textStyles: PropTypes.oneOfType([
-          PropTypes.array,
-          PropTypes.number,
-          PropTypes.shape({}),
-        ]).isRequired,
-    buttonStyles: PropTypes.oneOfType([
-          PropTypes.array,
-          PropTypes.number,
-          PropTypes.shape({}),
-        ]).isRequired,
-  }
+class CustomText extends Component {
 
   render() {
       const { textStyles, buttonStyles, content } = this.props;
@@ -28,4 +15,25 @@ class entryText extends Component {
 
 }
 
-export default entryText;
+CustomText.propTypes = {
+  content: PropTypes.string.isRequired,
+  textStyles: PropTypes.oneOfType([
+                PropTypes.array,
+                PropTypes.number,
+                PropTypes.shape({}),
+            ]).isRequired,
+  buttonStyles: PropTypes.oneOfType([
+                PropTypes.array,
+                PropTypes.number,
+                PropTypes.shape({}),
+            ]).isRequired,
+};
+
+const styles = StyleSheet.create({
+	viewStyle: {
+    borderWidth: 3,
+    borderColor: 'transparent',
+  },
+});
+
+export default CustomText;

@@ -1,69 +1,49 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { TouchableOpacity, Text, StyleSheet, View } from 'react-native';
+import Colors from '../constants/colors';
 
-class keyboardButton extends Component {
+class KeyboardButton extends Component {
 	render() {
-		const { text, onPress} = this.props;
+		const { text, onPress } = this.props;
 		return (
-			<View style={styles.viewStyle}>
-				<TouchableOpacity style={styles.buttonStyle} onPress={() => onPress()} >
-			    <Text style={styles.textStyle}>{text}</Text>
+			<View style={styles.keyboardView}>
+				<TouchableOpacity style={styles.keyboardTouch} onPress={() => onPress()} >
+			    <Text style={styles.keyboardText}>{text}</Text>
 		    </TouchableOpacity>		
 			</View>
 		);
 	}
 }
 
-keyboardButton.propTypes = {
+KeyboardButton.propTypes = {
   text: PropTypes.string.isRequired,
   onPress: PropTypes.func.isRequired
 };
 
 const styles = StyleSheet.create({
-	viewStyle: {
+	keyboardView: {
     borderWidth: 3,
-    borderColor: 'transparent',
+    borderColor: 'transparent'
   },
-	
-	textStyle: {
+	keyboardText: {
 		fontSize:15,
 		fontWeight: 'bold',
-	  color: '#ffffff',
+	  color:  Colors.keyboardButtonText,
 	  textAlign: 'center'
   },
-
-	buttonStyle: {
+	keyboardTouch: {
     borderRadius:3,
-    // paddingTop: 2,
-    // paddingBottom: 2,
-    // paddingLeft: 50,
-    // paddingRight: 50,
 		width: 35,
 		height: 35,
-		// backgroundColor: '#FFFFFF',
-		backgroundColor: '#3498db',
-    shadowColor: 'rgba(0, 0, 0, 0.1)',
+		backgroundColor: Colors.keyboardButton,
+    shadowColor: Colors.keyboardButtonShadow,
     shadowOpacity: 0.8,
     elevation: 6,
     shadowRadius: 15 ,
-		shadowOffset : { width: 1, height: 13},
-		justifyContent: 'center',
-  },
-
-	keyboardButton: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 10,
-    borderWidth: 10,
-    borderColor: '#FFFFFF',
-    width: 85,
-    height: 15,
-    shadowColor: '#000000',
-    shadowOffset: {
-      width: 0,
-      height: 3
-		}
-	},
+		shadowOffset : { width: 1, height: 13 },
+		justifyContent: 'center'
+  }
 });
 
-export default keyboardButton;
+export default KeyboardButton;

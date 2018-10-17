@@ -36,11 +36,20 @@ react-native run-android
 -------------------
 
 react-native run-android
+adb reverse tcp:8081 tcp:8081
 
+react-devtools
+adb reverse tcp:8097 tcp:8097
+
+cd android && ./gradlew assembleRelease
 
 ==================================
 
 npm install -g react-native-git-upgrade
+npm install -g react-devtools
+npm install -g typescript eslint babel-eslint
+npm install -g react-native-cli
+npm install -g jshint
 
 ==================================
 

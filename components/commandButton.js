@@ -1,22 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { TouchableOpacity, Text, StyleSheet, View } from 'react-native';
+import Colors from '../constants/colors';
 
-class commandButton extends Component {
-    constructor() {
-        super();
-        this.commandType = {}
-     }
-    
+class CommandButton extends Component {    
     render() {
-        const { text, commandType, onPress} = this.props;
+        const { commandType, onPress} = this.props;
         
         switch (commandType) {
             case 'clear':
                 return (
                     <View style={styles.viewStyle}>
                         <TouchableOpacity style={styles.buttonClear} onPress={() => onPress()} >
-                            <Text style={styles.textStyle}>clear</Text>
+                            <Text style={styles.commandButtonText}>clear</Text>
                         </TouchableOpacity>		
                     </View>
                 );
@@ -24,15 +20,16 @@ class commandButton extends Component {
                 return (
                     <View style={styles.viewStyle}>
                         <TouchableOpacity style={styles.buttonSpace} onPress={() => onPress()} >
-                            <Text style={styles.textStyle}> </Text>
+                            <Text style={styles.commandButtonText}> </Text>
                         </TouchableOpacity>		
                     </View>
                 );            
             case 'back':
                 return (
+                    // TODO: make this seprate component, pass props for content and reuse it
                     <View style={styles.viewStyle}>
                         <TouchableOpacity style={styles.buttonBack} onPress={() => onPress()} >
-                            <Text style={styles.textStyle}>back</Text>
+                            <Text style={styles.commandButtonText}>back</Text>
                         </TouchableOpacity>		
                     </View>
                 );            
@@ -40,7 +37,7 @@ class commandButton extends Component {
                 return (
                     <View style={styles.viewStyle}>
                         <TouchableOpacity style={styles.buttonEnter} onPress={() => onPress()} >
-                            <Text style={styles.textStyle}>enter</Text>
+                            <Text style={styles.commandButtonText}>enter</Text>
                         </TouchableOpacity>		
                     </View>
                 );
@@ -48,7 +45,7 @@ class commandButton extends Component {
                 return (
                     <View style={styles.viewStyle}>
                         <TouchableOpacity style={styles.buttonStartStop} onPress={() => onPress()} >
-                            <Text style={styles.textStyle}>start</Text>
+                            <Text style={styles.commandButtonText}>start</Text>
                         </TouchableOpacity>		
                     </View>
                 );
@@ -56,7 +53,7 @@ class commandButton extends Component {
                 return (
                     <View style={styles.viewStyle}>
                         <TouchableOpacity style={styles.buttonStartStop} onPress={() => onPress()} >
-                            <Text style={styles.textStyle}>pause</Text>
+                            <Text style={styles.commandButtonText}>pause</Text>
                         </TouchableOpacity>		
                     </View>
                 );
@@ -64,7 +61,7 @@ class commandButton extends Component {
                 return (
                     <View style={styles.viewStyle}>
                         <TouchableOpacity style={styles.buttonStartStop} onPress={() => onPress()} >
-                            <Text style={styles.textStyle}>continue</Text>
+                            <Text style={styles.commandButtonText}>continue</Text>
                         </TouchableOpacity>		
                     </View>
                 );
@@ -72,7 +69,7 @@ class commandButton extends Component {
                 return (
                     <View style={styles.viewStyle}>
                         <TouchableOpacity style={styles.buttonStartStop} onPress={() => onPress()} >
-                            <Text style={styles.textStyle}>stop</Text>
+                            <Text style={styles.commandButtonText}>stop</Text>
                         </TouchableOpacity>		
                     </View>
                 );            
@@ -80,7 +77,7 @@ class commandButton extends Component {
                 return (
                     <View style={styles.viewStyle}>
                         <TouchableOpacity style={styles.buttonDefault} onPress={() => onPress()} >
-                            <Text style={styles.textStyle}>undef</Text>
+                            <Text style={styles.commandButtonText}>undef</Text>
                         </TouchableOpacity>		
                     </View>
                 );
@@ -88,7 +85,7 @@ class commandButton extends Component {
 	}
 }
 
-commandButton.propTypes = {
+CommandButton.propTypes = {
     text: PropTypes.string,
     commandType: PropTypes.string.isRequired,
     onPress: PropTypes.func.isRequired
@@ -99,79 +96,55 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: 'transparent',
   },
-	
-  textStyle: {
-		fontSize:15,
-		fontWeight: 'bold',
-	  color: '#ffffff',
-	  textAlign: 'center'
+  commandButtonText: {
+	fontSize:15,
+	fontWeight: 'bold',
+	color: Colors.commandButtonText, // TODO
+	textAlign: 'center'
   },
-
   buttonDefault: {
     borderRadius:3,
-    // paddingTop: 2,
-    // paddingBottom: 2,
-    // paddingLeft: 50,
-    // paddingRight: 50,
     width: 50,
     height: 35,
-    // backgroundColor: '#FFFFFF',
-    backgroundColor: '#3498db',
-    shadowColor: 'rgba(0, 0, 0, 0.1)',
+    backgroundColor: Colors.keyboardButton, // TODO
+    shadowColor: Colors.commanButtonShadow, // TODO
     shadowOpacity: 0.8,
     elevation: 6,
-    shadowRadius: 15 ,
-		shadowOffset : { width: 1, height: 13},
-		justifyContent: 'center',
+    shadowRadius: 15,
+	shadowOffset : { width: 1, height: 13 },
+	justifyContent: 'center', // TODO
   },
-
   buttonClear: {
     borderRadius:3,
-    // paddingTop: 2,
-    // paddingBottom: 2,
-    // paddingLeft: 50,
-    // paddingRight: 50,
     width:  70,
     height: 35,
-    // backgroundColor: '#FFFFFF',
-    backgroundColor: '#1f618d',
-    shadowColor: 'rgba(0, 0, 0, 0.1)',
+    backgroundColor: Colors.commandButton, // TODO
+    shadowColor: Colors.commanButtonShadow, // TODO
     shadowOpacity: 0.8,
     elevation: 6,
     shadowRadius: 15 ,
     shadowOffset : { width: 1, height: 13},
-    justifyContent: 'center',
+    justifyContent: 'center', // TODO
   },
-
   buttonSpace: {
     borderRadius:3,
-    // paddingTop: 2,
-    // paddingBottom: 2,
-    // paddingLeft: 50,
-    // paddingRight: 50,
     width: 180,
     height: 35,
-    // backgroundColor: '#FFFFFF',
-    backgroundColor: '#1f618d',
-    shadowColor: 'rgba(0, 0, 0, 0.1)',
+    backgroundColor: Colors.commandButton,
+    shadowColor: Colors.commanButtonShadow, // TODO
     shadowOpacity: 0.8,
     elevation: 6,
     shadowRadius: 15 ,
     shadowOffset : { width: 1, height: 13},
-    justifyContent: 'center',
+    justifyContent: 'center', // TODO
   },
 
   buttonBack: {
     borderRadius:3,
-    // paddingTop: 2,
-    // paddingBottom: 2,
-    // paddingLeft: 20,
-    // paddingRight: 50,
     width: 60,
     height: 35,
-    // backgroundColor: '#FFFFFF',
-    backgroundColor: '#1f618d',
-    shadowColor: 'rgba(0, 0, 0, 0.1)',
+    backgroundColor: Colors.commandButton, // TODO
+    shadowColor: Colors.commanButtonShadow,
     shadowOpacity: 0.8,
     elevation: 6,
     shadowRadius: 15 ,
@@ -181,39 +154,29 @@ const styles = StyleSheet.create({
 
   buttonEnter: {
     borderRadius:3,
-    // paddingTop: 2,
-    // paddingBottom: 2,
-    // paddingLeft: 50,
-    // paddingRight: 50,
-		width: 70,
-		height: 35,
-		// backgroundColor: '#FFFFFF',
-		backgroundColor: '#1f618d',
-    shadowColor: 'rgba(0, 0, 0, 0.1)',
+	width: 70,
+	height: 35,
+	backgroundColor: Colors.commandButton, // TODO
+    shadowColor: Colors.commanButtonShadow,
     shadowOpacity: 0.8,
     elevation: 6,
     shadowRadius: 15 ,
     shadowOffset : { width: 1, height: 13},
-    justifyContent: 'center',
+    justifyContent: 'center', // TODO
   },
 
   buttonStartStop: {
     borderRadius:3,
-    // paddingTop: 2,
-    // paddingBottom: 2,
-    // paddingLeft: 50,
-    // paddingRight: 50,
-		width: 120,
-		height: 35,
-		// backgroundColor: '#FFFFFF',
-		backgroundColor: '#1f618d',
-    shadowColor: 'rgba(0, 0, 0, 0.1)',
+	width: 120,
+	height: 35,
+	backgroundColor: Colors.commandButton, // TODO
+    shadowColor: Colors.commanButtonShadow,
     shadowOpacity: 0.8,
     elevation: 6,
     shadowRadius: 15 ,
-    shadowOffset : { width: 1, height: 13},
-    justifyContent: 'center',
+    shadowOffset : { width: 1, height: 13 },
+    justifyContent: 'center', // TODO
   },
 });
 
-export default commandButton;
+export default CommandButton;
